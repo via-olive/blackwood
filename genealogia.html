@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>História - Blackwood</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --parchment-light: #f4f1e8;
+            --parchment-medium: #e8e0d0;
+            --parchment-dark: #d4c4a8;
+            --ink-dark: #2c1810;
+            --ink-medium: #3d2817;
+            --ink-light: #5a3f2a;
+            --accent-gold: #c9a961;
+            --accent-bronze: #8b6914;
+            --shadow-brown: rgba(44, 24, 16, 0.3);
+            --shadow-light: rgba(44, 24, 16, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(45deg, #2c1810 0%, #3d2817 25%, #2c1810 50%, #3d2817 75%, #2c1810 100%);
+            background-size: 400% 400%;
+            animation: subtleGradient 20s ease infinite;
+            color: var(--ink-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(201, 169, 97, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(201, 169, 97, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(201, 169, 97, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes subtleGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Header estilo pergaminho */
+        header {
+            background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-medium) 100%);
+            border-bottom: 3px solid var(--accent-bronze);
+            box-shadow: 0 8px 32px var(--shadow-brown);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(44, 24, 16, 0.02) 2px,
+                    rgba(44, 24, 16, 0.02) 4px
+                );
+            pointer-events: none;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--parchment-light);
+            font-weight: 700;
+            margin-right: 15px;
+            box-shadow: 
+                0 4px 15px rgba(44, 24, 16, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--accent-bronze);
+        }
+
+        .site-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--ink-dark);
+            text-shadow: 1px 1px 2px rgba(201, 169, 97, 0.3);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--ink-dark);
+            padding: 12px 20px;
+            border-radius: 25px;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            position: relative;
+            background: rgba(244, 241, 232, 0.3);
+            border: 1px solid transparent;
+        }
+
+        nav ul li a:hover {
+            background: linear-gradient(135deg, var(--parchment-medium) 0%, var(--parchment-light) 100%);
+            color: var(--ink-dark);
+            border-color: var(--accent-bronze);
+            box-shadow: 0 4px 12px var(--shadow-light);
+            transform: translateY(-2px);
+        }
+
+        nav ul li a.active {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            color: var(--parchment-light);
+            border-color: var(--accent-bronze);
+            box-shadow: 0 6px 20px rgba(139, 105, 20, 0.4);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: linear-gradient(135deg, var(--parchment-medium) 0%, var(--parchment-light) 100%);
+            border: 2px solid var(--accent-bronze);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--ink-dark);
+            box-shadow: 0 4px 12px var(--shadow-light);
+        }
+
+        /* Conteúdo Principal - Estilo Pergaminho */
+        main {
+            flex: 1;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .page-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: var(--accent-gold);
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .page-title::after {
+            content: '✦ ◆ ✦';
+            display: block;
+            font-size: 1rem;
+            color: var(--accent-bronze);
+            margin-top: 15px;
+            letter-spacing: 0.5em;
+        }
+
+        .content-section {
+            background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-medium) 100%);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 
+                0 15px 35px var(--shadow-brown),
+                inset 0 1px 3px rgba(255, 255, 255, 0.4);
+            border: 2px solid var(--accent-bronze);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(44, 24, 16, 0.02) 40px,
+                    rgba(44, 24, 16, 0.02) 42px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 25px,
+                    rgba(44, 24, 16, 0.015) 25px,
+                    rgba(44, 24, 16, 0.015) 27px
+                );
+            pointer-events: none;
+        }
+
+        .content-section::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .content-section h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--ink-dark);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content-section h2::after {
+            content: '◈';
+            display: block;
+            font-size: 1.2rem;
+            color: var(--accent-bronze);
+            margin-top: 10px;
+        }
+
+        .content-section p {
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: var(--ink-dark);
+            font-size: 1.1rem;
+            text-align: justify;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-section p:first-of-type::first-letter {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            float: left;
+            line-height: 3rem;
+            margin: 8px 12px 0 0;
+            color: var(--accent-bronze);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-container {
+            margin: 40px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid var(--accent-bronze);
+            box-shadow: 0 10px 25px var(--shadow-brown);
+            position: relative;
+            z-index: 1;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: sepia(20%) saturate(80%) brightness(95%);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.15) 0%, rgba(139, 105, 20, 0.1) 100%);
+            border: 2px solid var(--accent-gold);
+            border-left: 6px solid var(--accent-bronze);
+            padding: 30px;
+            margin: 35px 0;
+            border-radius: 8px;
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+        }
+
+        .highlight-box p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            color: var(--ink-medium);
+        }
+
+        .highlight-box p:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: var(--accent-bronze);
+            margin-bottom: 0;
+        }
+
+        /* Footer estilo pergaminho escuro */
+        footer {
+            background: linear-gradient(135deg, var(--ink-dark) 0%, var(--ink-medium) 100%);
+            color: var(--parchment-light);
+            padding: 50px 20px;
+            border-top: 3px solid var(--accent-bronze);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(201, 169, 97, 0.03) 50px,
+                    rgba(201, 169, 97, 0.03) 52px
+                );
+            pointer-events: none;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-column h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            border-radius: 1.5px;
+        }
+
+        .footer-column p {
+            color: var(--parchment-medium);
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent-bronze) 0%, var(--accent-gold) 100%);
+            border-radius: 50%;
+            color: var(--parchment-light);
+            text-decoration: none;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(201, 169, 97, 0.4);
+        }
+
+        .support-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .support-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--ink-medium) 0%, var(--ink-light) 100%);
+            color: var(--parchment-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--accent-bronze);
+        }
+
+        .support-btn:hover {
+            background: linear-gradient(135deg, var(--accent-bronze) 0%, var(--accent-gold) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(201, 169, 97, 0.3);
+        }
+
+        .copyright {
+            margin-top: 50px;
+            text-align: center;
+            color: var(--parchment-dark);
+            font-size: 0.9rem;
+            padding-top: 30px;
+            border-top: 2px solid var(--accent-bronze);
+            font-style: italic;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 15px;
+            }
+            
+            nav {
+                position: fixed;
+                top: 90px;
+                left: 0;
+                width: 100%;
+                background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-medium) 100%);
+                border-bottom: 3px solid var(--accent-bronze);
+                box-shadow: 0 8px 32px var(--shadow-brown);
+                clip-path: circle(0% at 100% 0);
+                transition: clip-path 0.6s ease-in-out;
+                z-index: 100;
+            }
+            
+            nav.active {
+                clip-path: circle(150% at 100% 0);
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 30px 20px;
+                gap: 10px;
+            }
+            
+            nav ul li {
+                width: 100%;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 15px 20px;
+                text-align: center;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .content-section {
+                padding: 25px;
+                margin-bottom: 30px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.6rem;
+            }
+            
+            .content-section p:first-of-type::first-letter {
+                font-size: 3rem;
+                line-height: 2.5rem;
+                margin: 5px 8px 0 0;
+            }
+        }
+
+        /* Animações sutis */
+        .content-section {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Efeito de papel queimado nas bordas */
+        .content-section:nth-child(even) {
+            position: relative;
+        }
+
+        .content-section:nth-child(even)::before {
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 30px,
+                    rgba(44, 24, 16, 0.03) 30px,
+                    rgba(44, 24, 16, 0.03) 32px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 30px,
+                    rgba(44, 24, 16, 0.02) 30px,
+                    rgba(44, 24, 16, 0.02) 32px
+                );
+        }
+
+        .tree ul {
+    padding-top: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.tree li {
+    list-style-type: none;
+    text-align: center;
+    position: relative;
+    padding: 20px 5px 0 5px;
+}
+
+.tree li::before, .tree li::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 2px;
+    background-color: var(--accent-bronze);
+}
+
+.tree li::before {
+    left: -50%;
+}
+
+.tree li::after {
+    right: -50%;
+}
+
+.tree li:only-child::before,
+.tree li:only-child::after {
+    display: none;
+}
+
+.tree li:only-child {
+    padding-top: 0;
+}
+
+.tree li:first-child::before,
+.tree li:last-child::after {
+    border: 0 none;
+}
+
+.tree li:last-child::before {
+    border-right: 2px solid var(--accent-bronze);
+    border-radius: 0 5px 0 0;
+}
+
+.tree li:first-child::after {
+    border-left: 2px solid var(--accent-bronze);
+    border-radius: 5px 0 0 0;
+}
+
+.tree ul ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-left: 2px solid var(--accent-bronze);
+    height: 20px;
+}
+
+.node {
+    display: inline-block;
+    padding: 15px 25px;
+    background: var(--parchment-medium);
+    border: 2px solid var(--accent-bronze);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    font-family: 'Cinzel', serif;
+    color: var(--ink-dark);
+    position: relative;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.node:hover {
+    transform: translateY(-3px);
+    background-color: var(--parchment-dark);
+}
+
+.node small {
+    display: block;
+    font-family: 'Crimson Text', serif;
+    color: var(--ink-medium);
+    margin-top: 4px;
+    font-size: 0.9rem;
+}
+/* Árvore Genealógica */
+.tree ul {
+    padding-top: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    transition: all 0.5s ease;
+}
+
+.tree li {
+    list-style-type: none;
+    text-align: center;
+    position: relative;
+    padding: 20px 5px 0 5px;
+    transition: all 0.5s ease;
+}
+
+.tree li::before, .tree li::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 2px;
+    background-color: var(--accent-bronze);
+}
+
+.tree li::before {
+    left: -50%;
+}
+
+.tree li::after {
+    right: -50%;
+}
+
+.tree li:only-child::before,
+.tree li:only-child::after {
+    display: none;
+}
+
+.tree li:only-child {
+    padding-top: 0;
+}
+
+.tree li:first-child::before,
+.tree li:last-child::after {
+    border: 0 none;
+}
+
+.tree li:last-child::before {
+    border-right: 2px solid var(--accent-bronze);
+    border-radius: 0 5px 0 0;
+}
+
+.tree li:first-child::after {
+    border-left: 2px solid var(--accent-bronze);
+    border-radius: 5px 0 0 0;
+}
+
+.tree ul ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-left: 2px solid var(--accent-bronze);
+    height: 20px;
+}
+
+/* Nós */
+.node {
+    display: inline-block;
+    padding: 15px 25px;
+    background: var(--parchment-medium);
+    border: 2px solid var(--accent-bronze);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    font-family: 'Cinzel', serif;
+    color: var(--ink-dark);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.node:hover {
+    transform: translateY(-3px);
+    background-color: var(--parchment-dark);
+}
+
+.node small {
+    display: block;
+    font-family: 'Crimson Text', serif;
+    color: var(--ink-medium);
+    margin-top: 4px;
+    font-size: 0.9rem;
+}
+
+/* Interatividade */
+.collapsed > ul {
+    display: none;
+}
+
+.collapsed > li {
+    display: none;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Header e Navbar -->
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo">JG</div>
+                <div class="site-title">Blackwood</div>
+            </div>
+            
+            <button class="mobile-menu-btn">☰</button>
+            
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">História</a></li>
+                    <li><a href="biblioteca.html">Biblioteca</a></li>
+                    <li><a href="aulas.html">Aulas</a></li>
+                    <li><a href="professores.html">Professores</a></li>
+                    <li><a href="alunos.html">Alunos</a></li>
+                    <li><a href="bestiario.html">Bestiário</a></li>
+                    <li><a href="herbario.html">Herbário</a></li>
+                    <li><a href="genealogia.html">Genealogia</a></li>
+                    <li><a href="landing-page.html">Sair</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+<main>
+    <h1 class="page-title">Genealogia da Família Blackwood</h1>
+
+    <section class="content-section">
+        <div class="tree">
+            <ul>
+                <li>
+                    <div class="node toggle">Elara Reed<br><small>Matriarca</small></div>
+                    <ul>
+                        <li>
+                            <div class="node toggle">Diana Reed<br><small>Filha</small></div>
+                            <ul>
+                                <li>
+                                    <div class="node">Morgan Reed<br><small>Neta</small></div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </section>
+</main>
+
+
+<script>
+    document.querySelectorAll('.node.toggle').forEach(node => {
+        node.addEventListener('click', (e) => {
+            const parentLi = node.parentElement;
+            parentLi.classList.toggle('collapsed');
+            e.stopPropagation();
+        });
+    });
+</script>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Studio Nome</h3>
+                <p>Criando mundos mágicos e experiências inesquecíveis desde 2023.</p>
+                <p>© 2025 Studio Nome. Todos os direitos reservados.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contato</h3>
+                <p>Email: contato@studionome.com</p>
+                <p>Discord: discord.gg/studionome</p>
+                <div class="social-links">
+                    <a href="#" title="Twitter">T</a>
+                    <a href="#" title="Instagram">I</a>
+                    <a href="#" title="YouTube">Y</a>
+                    <a href="#" title="Discord">D</a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Apoie nosso trabalho</h3>
+                <p>Se você gosta do nosso jogo e quer nos ajudar a continuar desenvolvendo, considere nos apoiar:</p>
+                <div class="support-buttons">
+                    <a href="#" class="support-btn">Patreon</a>
+                    <a href="#" class="support-btn">Ko-fi</a>
+                    <a href="#" class="support-btn">Apoia.se</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>"Nome do Jogo" é uma marca registrada de Studio Nome. Todos os elementos de história, personagens e mundo são propriedade intelectual protegida.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.getElementById('main-nav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.classList.toggle('active');
+            mobileMenuBtn.textContent = nav.classList.contains('active') ? '✕' : '☰';
+        });
+        
+        // Fechar menu ao clicar em um link (para mobile)
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                nav.classList.remove('active');
+                mobileMenuBtn.textContent = '☰';
+            });
+        });
+
+        // Animação de entrada sequencial das seções
+        const sections = document.querySelectorAll('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = '0.2s';
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

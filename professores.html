@@ -1,0 +1,884 @@
+!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professores - Blackwood</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --parchment-light: #f4f1e8;
+            --parchment-medium: #e8e0d0;
+            --parchment-dark: #d4c4a8;
+            --ink-dark: #2c1810;
+            --ink-medium: #3d2817;
+            --ink-light: #5a3f2a;
+            --accent-gold: #c9a961;
+            --accent-bronze: #8b6914;
+            --shadow-brown: rgba(44, 24, 16, 0.3);
+            --shadow-light: rgba(44, 24, 16, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(45deg, #2c1810 0%, #3d2817 25%, #2c1810 50%, #3d2817 75%, #2c1810 100%);
+            background-size: 400% 400%;
+            animation: subtleGradient 20s ease infinite;
+            color: var(--ink-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(201, 169, 97, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(201, 169, 97, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(201, 169, 97, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes subtleGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Header estilo pergaminho */
+        header {
+            background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-medium) 100%);
+            border-bottom: 3px solid var(--accent-bronze);
+            box-shadow: 0 8px 32px var(--shadow-brown);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(44, 24, 16, 0.02) 2px,
+                    rgba(44, 24, 16, 0.02) 4px
+                );
+            pointer-events: none;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--parchment-light);
+            font-weight: 700;
+            margin-right: 15px;
+            box-shadow: 
+                0 4px 15px rgba(44, 24, 16, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--accent-bronze);
+        }
+
+        .site-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--ink-dark);
+            text-shadow: 1px 1px 2px rgba(201, 169, 97, 0.3);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--ink-dark);
+            padding: 12px 20px;
+            border-radius: 25px;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            position: relative;
+            background: rgba(244, 241, 232, 0.3);
+            border: 1px solid transparent;
+        }
+
+        nav ul li a:hover {
+            background: linear-gradient(135deg, var(--parchment-medium) 0%, var(--parchment-light) 100%);
+            color: var(--ink-dark);
+            border-color: var(--accent-bronze);
+            box-shadow: 0 4px 12px var(--shadow-light);
+            transform: translateY(-2px);
+        }
+
+        nav ul li a.active {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            color: var(--parchment-light);
+            border-color: var(--accent-bronze);
+            box-shadow: 0 6px 20px rgba(139, 105, 20, 0.4);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: linear-gradient(135deg, var(--parchment-medium) 0%, var(--parchment-light) 100%);
+            border: 2px solid var(--accent-bronze);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--ink-dark);
+            box-shadow: 0 4px 12px var(--shadow-light);
+        }
+
+        /* Conteúdo Principal */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--accent-gold);
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .page-title::after {
+            content: '✦ ◆ ✦';
+            display: block;
+            font-size: 1rem;
+            color: var(--accent-bronze);
+            margin-top: 15px;
+            letter-spacing: 0.5em;
+        }
+
+        .page-description {
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--parchment-light);
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Filtros */
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-medium) 100%);
+            color: var(--ink-dark);
+            border: 2px solid var(--accent-bronze);
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 12px var(--shadow-light);
+        }
+
+        .filter-btn:hover {
+            background: linear-gradient(135deg, var(--parchment-medium) 0%, var(--parchment-light) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow-light);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            color: var(--parchment-light);
+            box-shadow: 0 6px 20px rgba(139, 105, 20, 0.4);
+        }
+
+        /* Grid de Personagens */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .character-card {
+            background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-medium) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 
+                0 15px 35px var(--shadow-brown),
+                inset 0 1px 3px rgba(255, 255, 255, 0.4);
+            border: 2px solid var(--accent-bronze);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .character-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(44, 24, 16, 0.02) 40px,
+                    rgba(44, 24, 16, 0.02) 42px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 25px,
+                    rgba(44, 24, 16, 0.015) 25px,
+                    rgba(44, 24, 16, 0.015) 27px
+                );
+            pointer-events: none;
+        }
+
+        .character-card::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .character-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 25px 50px var(--shadow-brown),
+                inset 0 1px 3px rgba(255, 255, 255, 0.4);
+        }
+
+        .character-content {
+            display: flex;
+            gap: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .character-portrait {
+            flex: 0 0 140px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid var(--accent-bronze);
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(44, 24, 16, 0.3);
+        }
+
+        .character-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            filter: sepia(15%) saturate(85%) brightness(95%);
+        }
+
+        .character-card:hover .character-portrait img {
+            transform: scale(1.05);
+        }
+
+        .character-info {
+            flex: 1;
+        }
+
+        .character-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--ink-dark);
+            text-shadow: 1px 1px 2px rgba(201, 169, 97, 0.3);
+        }
+
+        .character-title {
+            color: var(--accent-bronze);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            font-style: italic;
+        }
+
+        .character-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--ink-dark);
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .character-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .character-tag {
+            font-size: 0.85rem;
+            background: linear-gradient(135deg, rgba(201, 169, 97, 0.2) 0%, rgba(139, 105, 20, 0.15) 100%);
+            color: var(--accent-bronze);
+            padding: 6px 12px;
+            border-radius: 15px;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            font-weight: 600;
+        }
+
+        .power-level {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: radial-gradient(circle, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--parchment-light);
+            font-weight: 700;
+            font-size: 1.2rem;
+            font-family: 'Cinzel', serif;
+            box-shadow: 
+                0 6px 20px rgba(44, 24, 16, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--accent-bronze);
+            z-index: 2;
+        }
+
+        /* Footer estilo pergaminho escuro */
+        footer {
+            background: linear-gradient(135deg, var(--ink-dark) 0%, var(--ink-medium) 100%);
+            color: var(--parchment-light);
+            padding: 50px 20px;
+            border-top: 3px solid var(--accent-bronze);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(201, 169, 97, 0.03) 50px,
+                    rgba(201, 169, 97, 0.03) 52px
+                );
+            pointer-events: none;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-column h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-gold) 0%, var(--accent-bronze) 100%);
+            border-radius: 1.5px;
+        }
+
+        .footer-column p {
+            color: var(--parchment-medium);
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--accent-bronze) 0%, var(--accent-gold) 100%);
+            border-radius: 50%;
+            color: var(--parchment-light);
+            text-decoration: none;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(201, 169, 97, 0.4);
+        }
+
+        .support-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .support-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--ink-medium) 0%, var(--ink-light) 100%);
+            color: var(--parchment-light);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--accent-bronze);
+        }
+
+        .support-btn:hover {
+            background: linear-gradient(135deg, var(--accent-bronze) 0%, var(--accent-gold) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(201, 169, 97, 0.3);
+        }
+
+        .copyright {
+            margin-top: 50px;
+            text-align: center;
+            color: var(--parchment-dark);
+            font-size: 0.9rem;
+            padding-top: 30px;
+            border-top: 2px solid var(--accent-bronze);
+            font-style: italic;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 15px;
+            }
+            
+            nav {
+                position: fixed;
+                top: 90px;
+                left: 0;
+                width: 100%;
+                background: linear-gradient(135deg, var(--parchment-light) 0%, var(--parchment-medium) 100%);
+                border-bottom: 3px solid var(--accent-bronze);
+                box-shadow: 0 8px 32px var(--shadow-brown);
+                clip-path: circle(0% at 100% 0);
+                transition: clip-path 0.6s ease-in-out;
+                z-index: 100;
+            }
+            
+            nav.active {
+                clip-path: circle(150% at 100% 0);
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 30px 20px;
+                gap: 10px;
+            }
+            
+            nav ul li {
+                width: 100%;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 15px 20px;
+                text-align: center;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .character-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .character-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .character-portrait {
+                width: 100%;
+                height: 250px;
+                flex: unset;
+            }
+            
+            .power-level {
+                top: 15px;
+                right: 15px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animações */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .character-card:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .character-card:nth-child(3n) {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header e Navbar -->
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo">JG</div>
+                <div class="site-title">Blackwood</div>
+            </div>
+            
+            <button class="mobile-menu-btn">☰</button>
+            
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="index.html">História</a></li>
+                    <li><a href="biblioteca.html">Biblioteca</a></li>
+                    <li><a href="aulas.html">Aulas</a></li>
+                    <li><a href="professores.html" class="active">Professores</a></li>
+                    <li><a href="alunos.html">Alunos</a></li>
+                    <li><a href="bestiario.html">Bestiário</a></li>
+                    <li><a href="herbario.html">Herbário</a></li>
+                    <li><a href="genealogia.html">Genealogia</a></li>
+                    <li><a href="landing-page.html">Sair</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main>
+        <h1 class="page-title">Professores da Instituição</h1>
+        <p class="page-description">Conheça os mestres e instrutores de renome que compõem o corpo docente da nossa instituição. Cada um deles é especialista em sua área, com décadas ou mesmo séculos de experiência acumulada no estudo das artes arcanas.</p>
+        
+        <!-- Filtros por Categorias -->
+        <div class="category-filter">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="arcana">Magia Arcana</button>
+            <button class="filter-btn" data-filter="elemental">Elementalismo</button>
+            <button class="filter-btn" data-filter="herbology">Herbologia</button>
+            <button class="filter-btn" data-filter="alchemy">Alquimia</button>
+            <button class="filter-btn" data-filter="divination">Adivinhação</button>
+        </div>
+        
+        <!-- Grid de Personagens -->
+        <div class="character-grid">
+            <!-- Personagem 1 -->
+            <div class="character-card" data-category="arcana">
+                <div class="power-level">9</div>
+                <div class="character-content">
+                    <div class="character-portrait">
+                        <img src="/api/placeholder/120/180" alt="Arquimago Eldritch Evermoore">
+                    </div>
+                    <div class="character-info">
+                        <h2 class="character-name">Eldritch Evermoore</h2>
+                        <div class="character-title">Arquimago e Diretor</div>
+                        <p class="character-description">Com mais de dois séculos de vida, o Arquimago Evermoore é a autoridade máxima da instituição. Seu conhecimento de conjurações complexas e teoria mágica avançada é inigualável. Raramente ensina classes regulares, mas suas palestras ocasionais são eventos aguardados por todos.</p>
+                        <div class="character-tags">
+                            <span class="character-tag">Conjuração</span>
+                            <span class="character-tag">Manipulação Temporal</span>
+                            <span class="character-tag">Teoria Arcana</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Personagem 2 -->
+            <div class="character-card" data-category="elemental">
+                <div class="power-level">8</div>
+                <div class="character-content">
+                    <div class="character-portrait">
+                        <img src="imgs/flameheart.jpg" alt="Professora Lyra Flameheart">
+                    </div>
+                    <div class="character-info">
+                        <h2 class="character-name">Lyra Flameheart</h2>
+                        <div class="character-title">Mestra Elementalista de Fogo</div>
+                        <p class="character-description">Descendente de uma antiga linhagem de piromancianos, Lyra controla o fogo como se fosse uma extensão de seu próprio ser. Sua paixão pelo ensino é tão intensa quanto as chamas que manipula, fazendo dela uma das professoras mais queridas pelos estudantes.</p>
+                        <div class="character-tags">
+                            <span class="character-tag">Piromancia</span>
+                            <span class="character-tag">Forja Mágica</span>
+                            <span class="character-tag">Rituais Ígneos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Personagem 3 -->
+            <div class="character-card" data-category="herbology">
+                <div class="power-level">7</div>
+                <div class="character-content">
+                    <div class="character-portrait">
+                        <img src="/api/placeholder/120/180" alt="Professor Thorne Greenmantle">
+                    </div>
+                    <div class="character-info">
+                        <h2 class="character-name">Thorne Greenmantle</h2>
+                        <div class="character-title">Mestre Herbolista</div>
+                        <p class="character-description">Poucos conhecem as plantas mágicas como Thorne. Metade humano, metade dríade, ele possui uma conexão singular com o mundo vegetal. Sua estufa é um dos locais mais extraordinários da instituição, abrigando espécies raras de todos os cantos do mundo.</p>
+                        <div class="character-tags">
+                            <span class="character-tag">Herbologia</span>
+                            <span class="character-tag">Restauração Natural</span>
+                            <span class="character-tag">Venenos e Antídotos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Personagem 4 -->
+            <div class="character-card" data-category="alchemy">
+                <div class="power-level">7</div>
+                <div class="character-content">
+                    <div class="character-portrait">
+                        <img src="/api/placeholder/120/180" alt="Professora Morgana Mixturn">
+                    </div>
+                    <div class="character-info">
+                        <h2 class="character-name">Morgana Mixturn</h2>
+                        <div class="character-title">Alquimista Mestra</div>
+                        <p class="character-description">Excêntrica e brilhante, Morgana tem uma abordagem não-convencional para a alquimia. Suas aulas são conhecidas por explosões espetaculares e transmutações inesperadas. Apesar de seus métodos caóticos, é responsável por algumas das descobertas mais importantes da instituição na última década.</p>
+                        <div class="character-tags">
+                            <span class="character-tag">Alquimia Avançada</span>
+                            <span class="character-tag">Transmutação</span>
+                            <span class="character-tag">Elixires</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Personagem 5 -->
+            <div class="character-card" data-category="divination">
+                <div class="power-level">8</div>
+                <div class="character-content">
+                    <div class="character-portrait">
+                        <img src="/api/placeholder/120/180" alt="Professor Seraphus Veil">
+                    </div>
+                    <div class="character-info">
+                        <h2 class="character-name">Seraphus Veil</h2>
+                        <div class="character-title">Mestre Vidente</div>
+                        <p class="character-description">Seus olhos, um azul e outro prateado, parecem sempre estar olhando além do presente. Seraphus raramente fala sobre seu passado, mas rumores sugerem que ele já previu grandes catástrofes e ajudou a evitá-las. Seus ensinamentos são enigmáticos, mas profundamente valiosos.</p>
+                        <div class="character-tags">
+                            <span class="character-tag">Vidência</span>
+                            <span class="character-tag">Interpretação de Presságios</span>
+                            <span class="character-tag">Onirologia</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Personagem 6 -->
+            <div class="character-card" data-category="arcana">
+                <div class="power-level">6</div>
+                <div class="character-content">
+                    <div class="character-portrait">
+                        <img src="/api/placeholder/120/180" alt="Professora Esmeralda Runewriter">
+                    </div>
+                    <div class="character-info">
+                        <h2 class="character-name">Esmeralda Runewriter</h2>
+                        <div class="character-title">Especialista em Escrita Rúnica</div>
+                        <p class="character-description">A precisão de Esmeralda com runas é lendária. Seus encantamentos escritos podem durar décadas sem perder potência. Exigente e meticulosa, ela espera perfeição de seus alunos, mas aqueles que perseveram sob sua tutela se tornam mestres excepcionais em inscrições mágicas.</p>
+                        <div class="character-tags">
+                            <span class="character-tag">Runescrita</span>
+                            <span class="character-tag">Encantamentos</span>
+                            <span class="character-tag">Línguas Antigas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Studio Nome</h3>
+                <p>Criando mundos mágicos e experiências inesquecíveis desde 2023.</p>
+                <p>© 2025 Studio Nome. Todos os direitos reservados.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contato</h3>
+                <p>Email: contato@studionome.com</p>
+                <p>Discord: discord.gg/studionome</p>
+                <div class="social-links">
+                    <a href="#" title="Twitter">T</a>
+                    <a href="#" title="Instagram">I</a>
+                    <a href="#" title="YouTube">Y</a>
+                    <a href="#" title="Discord">D</a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Apoie nosso trabalho</h3>
+                <p>Se você gosta do nosso jogo e quer nos ajudar a continuar desenvolvendo, considere nos apoiar:</p>
+                <div class="support-buttons">
+                    <a href="#" class="support-btn">Patreon</a>
+                    <a href="#" class="support-btn">Ko-fi</a>
+                    <a href="#" class="support-btn">Apoia.se</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>"Nome do Jogo" é uma marca registrada de Studio Nome. Todos os elementos de história, personagens e mundo são propriedade intelectual protegida.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.getElementById('main-nav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.classList.toggle('active');
+            mobileMenuBtn.textContent = nav.classList.contains('active') ? '✕' : '☰';
+        });
+        
+        // Fechar menu ao clicar em um link (para mobile)
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                nav.classList.remove('active');
+                mobileMenuBtn.textContent = '☰';
+            });
+        });
+        
+        // Filtro de categorias
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const characterCards = document.querySelectorAll('.character-card');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remover classe 'active' de todos os botões
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Adicionar classe 'active' ao botão clicado
+                this.classList.add('active');
+                
+                // Obter categoria a ser filtrada
+                const filterValue = this.getAttribute('data-filter');
+                
+                // Filtrar os cards
+                characterCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
